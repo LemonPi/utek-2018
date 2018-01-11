@@ -297,8 +297,9 @@ Output (example): THEQUICLEVEOAREFESSTHFULBUSAUXEL
 | 4: Visualize    | Shows interesting data             | 20         |
 |                 | Well communicated                  | 10         |
 | 5: Generate     |                                    | 10         |
-| 6: Presentation | Justification of design decisions  | 30         |
-|                 | Presentation quality               | 20         |
+| 6: Presentation | Design is well justified           | 25         |
+|                 | Presentation quality               | 15         |
+|                 | Presentation visuals               | 10         |
 
 ## Some Recommendations
 - Parts 1 and 2 can be done in parallel.
