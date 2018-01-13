@@ -91,7 +91,7 @@ def get_ptb_prob(word, weights):
         if denom == 0:
             break
 
-        prob += weights[i] * num / denom
+        prob += weights[i-1] * num / denom
 
     return prob
 
