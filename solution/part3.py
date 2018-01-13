@@ -1,9 +1,6 @@
 import part1
 import part2
-
-asciiForA = 0x41
-asciiForZ = 0x5a
-ptb_prob_weights = [1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,0.888889]
+from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights
 
 def crack3a(ciphertext):
     bestScore = -1
@@ -17,11 +14,6 @@ def crack3a(ciphertext):
             bestText = newText
             bestKey = i
     return str(bestKey) + " | " + bestText
-
-def doPart(infilename, partfn):
-    with open("input/" + infilename + ".in", "r") as infile, open("output/" + infilename + ".out", "w") as outfile:
-        for l in infile:
-            print(partfn(l.rstrip("\n")), file=outfile)
 
 def main():
     doPart("3a", crack3a)
