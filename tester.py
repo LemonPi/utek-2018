@@ -26,6 +26,7 @@ input_path = os.path.join(args.ref, 'input')
 ref_path = os.path.join(args.ref, 'ref')
 output_path = os.path.join(args.out, 'output')
 
+os.makedirs('input', exist_ok=True)
 os.system('cp -rf {}/* input'.format(input_path))
 shutil.rmtree('output', ignore_errors=True)
 os.mkdir('output')
@@ -35,12 +36,11 @@ t = time.time()
 
 # use this to suppress stdout and stderr
 # with open(output_path + '/stdout.txt', 'w') as stdout, open(output_path + '/stderr.txt', 'w') as stderr:
-#     subprocess.call('./run', stdout=stdout, stderr=stderr, timeout=10*60)
-subprocess.call('./run', timeout=10*60)
-# add the executable name for Git bash (sh ./run for the example)
-
+#     subprocess.call('sh ./run', stdout=stdout, stderr=stderr, timeout=10*60)   # add the executable name for Git bash (sh ./run for the example)
+subprocess.call('sh ./run', timeout=5*60)
 print('Took {} seconds'.format(time.time() - t))
 
+os.makedirs('ref', exist_ok=True)
 os.system('cp -rf {}/* ref'.format(ref_path))
 
 # diff against outputs to compute score
