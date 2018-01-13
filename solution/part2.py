@@ -114,8 +114,13 @@ def get_ptb_sentence_score(sentence, weights, ngrams=None):
         # print("{}: {}".format(i, word))
         p = get_ptb_prob(word, weights, ngrams)
         # print("logp: {}".format(p))
-        if p != 0:
+        # compare against 0
+        if abs(p) > 1e-7:
             prob += math.log(p)
+        else:
+            prob -= 50
+
+    # print("sent {}".format(prob))
 
     return prob
 
