@@ -49,7 +49,7 @@ def get_ptb_ngrams():
     except FileNotFoundError:
         with open(PTB_SRC, 'r') as text:
             ngrams = count_chars(text.read(), MAX_N)
-            with open('wb') as dump:
+            with open(PTB_P, 'wb') as dump:
                 pickle.dump(ngrams, dump)
 
     ptb_ngrams = ngrams
