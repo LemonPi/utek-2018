@@ -1,15 +1,17 @@
 import re
 import pickle
 import math
-from utekutils import ptb_prob_weights, doPart
+from utekutils import ptb_prob_weights, doPart, inf
 
+_SANITIZE_INPUT_RE = re.compile(r'<unk>|[^\w]')
+_SANITIZE_WITHOUT_SPACE_RE = re.compile(r'<unk>|N|[^\w]')
 
 def sanitize_input(text):
-    return re.sub(r'<unk>|[^\w]', '', text).upper()
+    return _SANITIZE_INPUT_RE.sub('', text).upper()
 
 
 def sanitize_without_space(text):
-    return re.sub(r'<unk>|N|[^\w]', '', text).upper()
+    return _SANITIZE_WITHOUT_SPACE_RE.sub('', text).upper()
 
 
 def count_chars(corpus, maxn):
@@ -114,7 +116,7 @@ def part_2a(line):
 
 def part_2b(line):
     line = [sanitize_input(sent.strip()) for sent in line.split("|")]
-    most_likely_prob = -math.inf
+    most_likely_prob = -inf
     most_likely_sentence = None
 
     for i in range(len(line)):

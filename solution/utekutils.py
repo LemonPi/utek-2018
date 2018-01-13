@@ -7,6 +7,8 @@ asciiForA = 0x41
 asciiForZ = 0x5a
 """The hardcoded lambda values for part 3."""
 ptb_prob_weights = [1e-5,1e-4,1e-3,1e-2,1e-1,0.88889]
+"""Constant for infinity. Equal to float('inf'). Added because Python 3.3 doesn't have math.inf."""
+inf = float('inf')
 
 
 def doPart(infilename, partfn):
