@@ -2,13 +2,13 @@ import part1
 import part2
 import random
 import math
-from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights
+from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights, inf
 from collections import OrderedDict
 
 
 
 def crack3a(ciphertext):
-    bestScore = -1
+    bestScore = -inf
     bestText = None
     bestKey = -1
     for i in range(0, 26):

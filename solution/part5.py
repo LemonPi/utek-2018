@@ -28,7 +28,7 @@ def gen5(curStr):
         if newScore > bestScore:
             bestSentence = newSentence
             bestScore = newScore
-    print(bestSentence)
+    #print(bestSentence)
     return bestSentence
 
 def getWeight(word):
