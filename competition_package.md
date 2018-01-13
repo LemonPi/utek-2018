@@ -203,7 +203,7 @@ Output: 2
 This part will not be scored, but you can add additional features to your model if they improve your results for part 3. This may include checking the first letter of words, looking words up in a dictionary, etc. This is not needed for most of the test cases in part 3, but may make your solution more robust.
 
 ### Part 3: Crack
-Fortunately, these ciphers are breakable with some statistics and enough computation power. In theory, we just need to find the key that maximizes the score from Part 2. You can assume that `lambda = [1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,0.888889]`.
+Fortunately, these ciphers are breakable with some statistics and enough computation power. In theory, we just need to find the key that maximizes the score from Part 2. You can assume that `lambda = [1e-5,1e-4,1e-3,1e-2,1e-1,0.88889]`.
 
 #### Part 3 Input/ Output Specification
 ```
