@@ -4,6 +4,7 @@ import random
 import math
 from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights, inf
 from collections import OrderedDict
+import time
 
 
 def crack3a(ciphertext):
@@ -132,6 +133,7 @@ def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scal
     # keep the best resolution for printing at the end
     best_score = get_score(curr_key, scores_dp, sentence)
     best_key = curr_key
+    # best_decrypt = part1.encryptBlock(sentence, list(best_key), False)
     step = 0
     while step < max_steps:
         # score current state (only care about maximum per location)
@@ -143,6 +145,10 @@ def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scal
         # pick random neighbour
         new_key = get_neighbour(curr_key, isStateValid)
         new_score = get_score(new_key, scores_dp, sentence)
+
+        # export for visualization
+        # print("{}|{}|{}".format(time.time(), best_score, best_decrypt), file="visual_output.txt")
+
         if pick_state(curr_score, new_score, temperature, MAX_TEMPERATURE, BASE_SELECTIVITY,
                       score_scale) > random.random():
             curr_key = new_key
@@ -186,9 +192,36 @@ def crack3b(ciphertext):
     return " ".join([" ".join((str(k) for k in best_key)), "|", part1.encryptBlock(orig_sentence, best_key, False)])
 
 
+def crack3c(orig_sentence):
+    sentence = part2.sanitize_input(orig_sentence)
+
+    best_key = None
+    best_score = None
+
+    for key_length in range(1, 8):
+        for seed in range(20):
+            random.seed(seed)
+            curr_key = tuple(random.randint(0, 26) for _ in range(key_length))
+            curr_key, key_score = simulated_annealing(score_key, get_neighbour_block_key, sentence, curr_key, 20,
+                                                      MAX_STEPS / 4)
+            key, score = simulated_annealing(score_sentence, get_neighbour_block_key, sentence, curr_key, 0.1,
+                                             MAX_STEPS / 4)
+
+            if best_score is None or score > best_score:
+                best_score = score
+                best_key = key
+
+    print("best score (annealing): {}".format(best_score))
+    # print("best score: {}".format(max(max(arr) for arr in arrays)))
+    print("best key: {}".format(best_key))
+    print(part1.encryptBlock(sentence, list(best_key), False))
+    return " ".join([" ".join((str(k) for k in best_key)), "|", part1.encryptBlock(orig_sentence, best_key, False)])
+
+
 def main():
     # doPart("3a", crack3a)
     doPart("3b", crack3b)
+    doPart("3c", crack3c)
 
 
 if __name__ == "__main__":
