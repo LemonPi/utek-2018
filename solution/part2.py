@@ -105,28 +105,29 @@ def get_count(ngrams, word):
         return ngram[word]
 
 
-def get_ptb_sentence_score(sentence, weights):
+def get_ptb_sentence_score(sentence, weights, ngrams=None):
     # assumes sentence is sanitized
     # split sentence into MAX_N grams and take the sum of the log prob
     prob = 0
     for i in range(max(1, len(sentence) - MAX_N + 1)):
         word = sentence[i:i + MAX_N]
-        print("{}: {}".format(i, word))
-        p = get_ptb_prob(word, weights)
-        print("logp: {}".format(p))
+        # print("{}: {}".format(i, word))
+        p = get_ptb_prob(word, weights, ngrams)
+        # print("logp: {}".format(p))
         if p != 0:
             prob += math.log(p)
 
     return prob
 
 
-def get_ptb_prob(word, weights):
-    ngrams = get_ptb_ngrams()
+def get_ptb_prob(word, weights, ngrams=None):
+    if ngrams is None:
+        ngrams = get_ptb_ngrams()
     prob = 0
     for i in range(1, len(word)):
         denom = get_count(ngrams, word[:i])
         num = get_count(ngrams, word[:i + 1])
-        print("{}:{}\t{}:{}".format(word[:i + 1], num, word[:i], denom))
+        # print("{}:{}\t{}:{}".format(word[:i + 1], num, word[:i], denom))
 
         # anything else will also be 0
         if denom == 0:
@@ -142,7 +143,7 @@ def part_2a(line):
     corpus = line[0]
     word = sanitize_input(line[1])
 
-    print("[{}] [{}]".format(corpus, word))
+    # print("[{}] [{}]".format(corpus, word))
 
     if corpus == "PTB":
         ngrams = get_ptb_ngrams()
@@ -150,7 +151,7 @@ def part_2a(line):
     else:
         ngrams = count_chars(corpus, MAX_N)
 
-    print(get_count(ngrams, word))
+    # print(get_count(ngrams, word))
     return get_count(ngrams, word)
 
 
