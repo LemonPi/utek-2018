@@ -109,7 +109,7 @@ def get_ptb_sentence_score(sentence, weights):
     # assumes sentence is sanitized
     # split sentence into MAX_N grams and take the sum of the log prob
     prob = 0
-    for i in range(len(sentence) - MAX_N + 1):
+    for i in range(max(1, len(sentence) - MAX_N + 1)):
         word = sentence[i:i + MAX_N]
         print("{}: {}".format(i, word))
         p = get_ptb_prob(word, weights)
