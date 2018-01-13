@@ -1,6 +1,7 @@
 import re
 import pickle
 import math
+from utekutils import ptb_prob_weights, doPart
 
 
 def sanitize_input(text):
@@ -95,7 +96,7 @@ def get_ptb_prob(word, weights):
     return prob
 
 
-def part_2a(line, output):
+def part_2a(line):
     line = [side.strip() for side in line.split("|")]
     corpus = line[0]
     word = sanitize_input(line[1])
@@ -108,41 +109,29 @@ def part_2a(line, output):
         ngrams = count_chars(corpus, MAX_N)
 
     print(get_count(ngrams, word))
-    print(get_count(ngrams, word), file=output)
+    return get_count(ngrams, word)
 
 
-def part_2b(line, output):
+def part_2b(line):
     line = [sanitize_input(sent.strip()) for sent in line.split("|")]
     most_likely_prob = -math.inf
     most_likely_sentence = None
 
-    WEIGHTS = [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.888889]
-
     for i in range(len(line)):
         sentence = line[i]
-        logp = get_ptb_sentence_score(sentence, WEIGHTS)
+        logp = get_ptb_sentence_score(sentence, ptb_prob_weights)
         print("---\n{}:{}\n".format(sentence, logp))
         if logp > most_likely_prob:
             most_likely_prob = logp
             most_likely_sentence = i + 1
 
-    print(most_likely_sentence, file=output)
+    return most_likely_sentence
 
 
-def do_part_2a():
-    with open("../input/2a.in", 'r') as input:
-        with open("../output/2a.out", 'w') as output:
-            for line in input:
-                part_2a(line, output)
-
-
-def do_part_2b():
-    with open("../input/2b.in", 'r') as input:
-        with open("../output/2b.out", 'w') as output:
-            for line in input:
-                part_2b(line, output)
+def main():
+    doPart("2a", part_2a)
+    doPart("2b", part_2b)
 
 
 if __name__ == "__main__":
-    # do_part_2a()
-    do_part_2b()
+    main()
