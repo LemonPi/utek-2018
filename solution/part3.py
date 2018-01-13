@@ -219,7 +219,7 @@ def crack3c(orig_sentence):
 
 
 def main():
-    # doPart("3a", crack3a)
+    doPart("3a", crack3a)
     doPart("3b", crack3b)
     doPart("3c", crack3c)
 
