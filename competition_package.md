@@ -246,7 +246,7 @@ Write a function that will return the ciphertext and key. It may not be possible
 ### Part 4: Visualization
 
 As part of your presentation, create a visualization to show an interesting aspect of your model or solution.
-Any code used to generate this should be part of your repository and submitted, but your results do not need to be runnable the ECF, e.g. you can use a program on your computer and format the results in slides.
+Any code used to generate this should be part of your repository and submitted, but it doesn't need to be reproducible, e.g. you can use a program on your computer and format the results in slides.
 Submit the final result of your visualization in an appropriate format (screenshots, video, slides etc.).
 
 Some ideas:
