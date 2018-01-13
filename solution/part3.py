@@ -1,9 +1,10 @@
 import part1
 import part2
 
-def crack3a(instr):
-    parts = instr.split(" | ")
-    ciphertext = parts[0]
+asciiForA = 0x41
+asciiForZ = 0x5a
+
+def crack3a(ciphertext):
     bestScore = -1
     bestText = None
     bestKey = -1
@@ -16,13 +17,13 @@ def crack3a(instr):
             bestKey = i
     return str(bestKey) + " | " + bestText
 
-def part3a():
-    infilename = "3a"
+def doPart(infilename, partfn):
     with open("input/" + infilename + ".in", "r") as infile, open("output/" + infilename + ".out", "w") as outfile:
         for l in infile:
-            print(crack3a(l.rstrip("\n")), file=outfile)
+            print(partfn(l.rstrip("\n")), file=outfile)
 
 def main():
-    part3a()
+    doPart("3a", crack3a)
+
 if __name__ == "__main__":
     main()
