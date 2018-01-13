@@ -13,7 +13,7 @@ def crack3a(ciphertext):
     bestKey = -1
     for i in range(0, 26):
         newText = part1.encryptBlock(ciphertext, [i], False)
-        newScore = part2.get_ptb_sentence_score(newText, ptb_prob_weights)
+        newScore = part2.get_ptb_sentence_score(part2.sanitize_input(newText), ptb_prob_weights)
         if newScore > bestScore:
             bestScore = newScore
             bestText = newText
