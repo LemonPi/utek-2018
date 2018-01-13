@@ -71,6 +71,16 @@ def get_neighbour_block_key(curr_key, isValid):
     return tuple(curr_key[k] if k != i else change for k in range(N))
 
 
+def get_neighbour_map(curr_key, isValid):
+    N = len(curr_key)
+    i = random.randint(0, N - 1)
+    j = random.randint(0, N - 1)
+
+    lst = list(curr_key)
+    lst[i], lst[j] = lst[j], lst[i]
+    return ''.join(lst)
+
+
 def isStateValid(key):
     N = len(key)
 
@@ -90,13 +100,23 @@ def score_sentence(key, scores_dp, sentence):
     return part2.get_ptb_sentence_score(dcr_sentence, ptb_prob_weights)  # from part 2
 
 
-def score_key(key, scores_dp, sentence):
+def score_sentence_map(key, scores_dp, sentence):
+    # if this score has already been calculated, just return it
+    if key in scores_dp:
+        return scores_dp[key]
+
+    # else, calculate the score and return it
+    dcr_sentence = part1.encryptMap(sentence, key, False)  # from part 1
+    return part2.get_ptb_sentence_score(dcr_sentence, ptb_prob_weights)  # from part 2
+
+
+def score_key(key, scores_dp, sentence, encrypt=part1.encryptBlock):
     # if this score has already been calculated, just return it
     if key in scores_dp:
         return scores_dp[key]
 
     # apply key to sentence
-    sent = part1.encryptBlock(sentence, key, True)
+    sent = encrypt(sentence, key, True)
 
     # calculate score from how well the individual character frequencies match up
     base_freq = part2.get_ptb_ngrams()[0]
@@ -125,6 +145,12 @@ def score_key(key, scores_dp, sentence):
     return score
 
 
+
+def score_key_map(key, scores_dp, sentence):
+    return score_key(key, scores_dp, sentence, part1.encryptMap)
+
+VISUALIZATION_FILE = None
+
 def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scale, max_steps=MAX_STEPS):
     temperature = MAX_TEMPERATURE
     # track score over time
@@ -133,7 +159,8 @@ def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scal
     # keep the best resolution for printing at the end
     best_score = get_score(curr_key, scores_dp, sentence)
     best_key = curr_key
-    # best_decrypt = part1.encryptBlock(sentence, list(best_key), False)
+    best_decrypt = part1.encryptBlock(sentence, list(best_key), False)
+
     step = 0
     while step < max_steps:
         # score current state (only care about maximum per location)
@@ -147,7 +174,7 @@ def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scal
         new_score = get_score(new_key, scores_dp, sentence)
 
         # export for visualization
-        # print("{}|{}|{}".format(time.time(), best_score, best_decrypt), file="visual_output.txt")
+        print("{}|{}|{}".format(time.time(), best_score, best_decrypt), file=VISUALIZATION_FILE)
 
         if pick_state(curr_score, new_score, temperature, MAX_TEMPERATURE, BASE_SELECTIVITY,
                       score_scale) > random.random():
@@ -218,11 +245,38 @@ def crack3c(orig_sentence):
     return " ".join([" ".join((str(k) for k in best_key)), "|", part1.encryptBlock(orig_sentence, best_key, False)])
 
 
+def crack3d(orig_sentence):
+    sentence = part2.sanitize_input(orig_sentence)
+
+    best_key = None
+    best_score = None
+
+    for seed in range(40):
+        random.seed(seed)
+        alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        curr_key = ''.join(random.sample(alpha, len(alpha)))
+        curr_key, key_score = simulated_annealing(score_key_map, get_neighbour_map, sentence, curr_key, 20)
+        key, score = simulated_annealing(score_sentence_map, get_neighbour_map, sentence, curr_key, 0.1)
+
+        if best_score is None or score > best_score:
+            best_score = score
+            best_key = key
+
+    print("best score (annealing): {}".format(best_score))
+    # print("best score: {}".format(max(max(arr) for arr in arrays)))
+    print("best key: {}".format(best_key))
+    print(part1.encryptMap(sentence, best_key, False))
+    return " ".join([best_key, "|", part1.encryptMap(orig_sentence, best_key, False)])
+
+
 def main():
     doPart("3a", crack3a)
     doPart("3b", crack3b)
     doPart("3c", crack3c)
+    doPart("3d", crack3d)
 
 
 if __name__ == "__main__":
+    VISUALIZATION_FILE = open("visual_output.txt", 'w')
     main()
+    VISUALIZATION_FILE.close()
