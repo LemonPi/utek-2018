@@ -1,11 +1,16 @@
-![utek logo](images/utek-logo.png)
+## UTEK 2018 Programming Solution: Team 5
 
-<h1 align="center"> Programming Competition </h1>
+### Running the solution
 
-Please see the [competition package](competition_package.md)
+To run the solution, please, in the top level directory, run
 
+`sh ./run`
+
+To run the tester, run
+
+`python3 tester.py`
 
 ### Visualization
-Optimization algorithm outputs timestamped log which are plotted.
+Optimization algorithm in Part 3 outputs timestamped log which are plotted.
 The file will have lines of the following format:
 `<seconds since start (float)>|<current best key (space separtaed integers)>|<best likelihood (float)>|<testing key (as before)>|<test likelihood (float)>`
