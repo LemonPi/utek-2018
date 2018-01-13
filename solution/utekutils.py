@@ -14,6 +14,6 @@ def doPart(infilename, partfn):
         infilename (str): The problem name (e.g. 1a)
         partfn (func(str) -> object): The solution function taking in a line from infile and returning an object to print to outfile.
     """
-    with open("input/" + infilename + ".in", "r") as infile, open("output/" + infilename + ".out", "w") as outfile:
+    with open("../input/" + infilename + ".in", "r") as infile, open("../output/" + infilename + ".out", "w") as outfile:
         for l in infile:
             print(partfn(l.rstrip("\n")), file=outfile)

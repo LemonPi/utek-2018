@@ -4,5 +4,5 @@
 # it doesn't need to be bash if it can be run from shell,
 # but you must set the shebang (https://en.wikipedia.org/wiki/Shebang_(Unix))
 # with something that works with the ECF or GCP
-
-python3 solution/main.py
+cd solution
+python3 main.py
