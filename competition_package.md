@@ -282,7 +282,20 @@ Choose B with probability exp(-51.521) / [exp(-31.123) + exp(-51.521) + … ]
 Output (example): THEQUICLEVEOAREFESSTHFULBUSAUXEL
 ```
 
+## Presentation
+
+As part of your submission, you must submit a slideshow to be delivered to a panel of judges.
+The six teams with the highest scores will receive an email inviting them back to present on Sunday.
+Your presentation will be up to eight minutes with five minutes for questions.
+
+I recommend that you focus on things that will be unique to your solution:
+- Optimization tricks to run quickly
+- Any additional features you added in Part 2C
+- How you incrementally improve your key in Part 3
+- Any visualizations you've created
+
 ## Scoring
+### Test Cases
 | Part            | Sub Part                           | Max Score  |
 |-----------------|------------------------------------|------------|
 | 1: Practice     | a: Step                            | 5          |
@@ -301,21 +314,19 @@ Output (example): THEQUICLEVEOAREFESSTHFULBUSAUXEL
 |                 | Presentation quality               | 15         |
 |                 | Presentation visuals               | 10         |
 
+### Presentation
+
+| Criterion | | | |
+| ----------|-|-|-|
+| Design Justification /25 | Explanations are detailed, all with solid reasoning | Explanations are detailed, reasoning is generally solid | Explanations and/or rationales are missing |
+| Presentation Quality /15 | Presentation flows well and is easily followed | Presentation flows well | Presentation is disjointed and/or disorganized |
+| Presentation Visuals /10 | Visuals add to the presentation | Visuals are used | Visuals detract from the presentation/ no visuals |
+
 ## Some Recommendations
 - Parts 1 and 2 can be done in parallel.
 - The speed of your implementation in part 2 will affect the number of possibilities you can try for part 3, so make sure your implementation for part 2 is reasonably fast.
 - 1A is a special case of 1B or 1C, you can implement the latter using the former.
 
-## Presentation
 
-As part of your submission, you must submit a slideshow to be delivered to a panel of judges.
-The six teams with the highest scores will receive an email inviting them back to present on Sunday.
-Your presentation will be up to eight minutes with five minutes for questions.
-
-I recommend that you focus on things that will be unique to your solution:
-- Optimization tricks to run quickly
-- Any additional features you added in Part 2C
-- How you incrementally improve your key in Part 3
-- Any visualizations you've created
 
 Good luck!
