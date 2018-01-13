@@ -53,7 +53,7 @@ You can zip folders with the following command:
 ## Testing Specification
 All testing will either be done on an ECF Linux computer or on [Google Cloud Platform](https://cloud.google.com/). If you are using the ECF, you should SSH directly into a physical machine (`p1.ecf.utoronto.ca -> p185.ecf.utoronto.ca`). If you are using GCP, you must remain within the free tier (`f1-micro` machines).
 
-You must provide a script `run` in the top level directory. Assume that the test cases are in a folder called `input` and write to a folder called `output` (which you may assume exists). Your script has ten minutes to complete all of the test cases.
+You must provide a script `run` in the top level directory. Assume that the test cases are in a folder called `input` and write to a folder called `output` (which you may assume exists). Your script has ten minutes to complete all of the test cases. There will be about twice as many test cases for the real set.
 
 There will be a test file for each subsection of the question e.g. `1a.in`, `1b.in`, `2a.in`. Output should be written to files called `1a.out` etc. Each test case will be on a separate line, with each parameter separated by a pipe character (`|`). No input or output will contain the pipe character. Ignore any blank lines. Nothing else should be in the input or output files.
 
@@ -146,6 +146,12 @@ Output: <whichever sentence is "more probable">
 
 #### 2A: Counting
 Using the dataset [here](ptb.train.txt) for training, count the number of times each sequence of n letters (called an n-gram) appears for n <= 7. Ignore any non-uppercase characters in the corpus. Note that 26^7 ~= 8 billion, but only a small fraction of these combinations occur. Write code to count how many times each n-gram appears in the text.
+
+You will need to preprocess the dataset as follows:
+- Remove all `<unk>` tokens. These represent uncommon words
+- Remove all `N` tokens. These represent numbers
+- Remove all non-alphabetic characterse
+- Convert everything to uppercase
 
 You should count everything once and store it in a data structure, because you will reuse these counts many times when you run parts 2B and onward.
 

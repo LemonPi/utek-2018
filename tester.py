@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # run with python3 tester.py
+# can optionally specify folder locations: python3 tester.py --ref=/path/to/ref
 
 import subprocess
 import shutil
@@ -34,8 +35,10 @@ t = time.time()
 
 # use this to suppress stdout and stderr
 # with open(output_path + '/stdout.txt', 'w') as stdout, open(output_path + '/stderr.txt', 'w') as stderr:
-#     subprocess.call('sh ./run', stdout=stdout, stderr=stderr, timeout=5*60)   # add the executable name for Git bash (sh ./run for the example)
-subprocess.call('sh ./run', timeout=5*60)
+#     subprocess.call('./run', stdout=stdout, stderr=stderr, timeout=10*60)
+subprocess.call('./run', timeout=10*60)
+# add the executable name for Git bash (sh ./run for the example)
+
 print('Took {} seconds'.format(time.time() - t))
 
 os.system('cp -rf {}/* ref'.format(ref_path))
