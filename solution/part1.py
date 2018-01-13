@@ -8,6 +8,7 @@ asciiForA = 0x41
 """Constant for the ASCII code of uppercase Z."""
 asciiForZ = 0x5a
 
+
 def encryptMap(intext, strMap, encrypting):
     """Encrypt/decrypt an input text using a letter mapping and return the result as a string.
     Args:
@@ -21,11 +22,11 @@ def encryptMap(intext, strMap, encrypting):
     if not encrypting:
         # Invert the mapping.
         # Then decryption is equal to applying the inverted mapping as an encryption.
-        newStrMap = [" "]*26
+        newStrMap = [" "] * 26
         for i in range(len(strMap)):
             newStrMap[ord(strMap[i]) - asciiForA] = chr(i + asciiForA)
         strMap = "".join(newStrMap)
-            
+
     for a in intext:
         charCode = ord(a)
         if charCode >= asciiForA and charCode <= asciiForZ:
@@ -34,6 +35,7 @@ def encryptMap(intext, strMap, encrypting):
             outchar = a
         outstr.append(outchar)
     return "".join(outstr)
+
 
 def encryptBlock(intext, key, encrypting):
     """Encrypt/decrypt an input text using a block-based modified Caesar cipher and return the result as a string.
@@ -61,6 +63,7 @@ def encryptBlock(intext, key, encrypting):
         outstr.append(outchar)
     return "".join(outstr)
 
+
 def part1(instr, partname):
     """Solve one line of an input file of part 1.
     """
@@ -72,11 +75,13 @@ def part1(instr, partname):
         result = encryptBlock(parts[2], [int(a) for a in parts[1].split()], encrypting)
     return result
 
+
 def main():
     """Run the solution to part 1.
     """
     for part in ["1a", "1b", "1c"]:
         doPart(part, lambda instr: part1(instr, part))
+
 
 if __name__ == "__main__":
     main()
