@@ -208,7 +208,7 @@ Fortunately, these ciphers are breakable with some statistics and enough computa
 #### Part 3 Input/ Output Specification
 ```
 Input:
-CRACK | <ciphertext> [| <key length> for 3B only]
+<ciphertext> [| <key length> for 3B only]
 
 Output:
 <key> | <message>           For 3A and 3D
@@ -231,11 +231,11 @@ The others are less easy to crack. The block step code has `26^{key_length}` pos
 Write a function that will return the message text and key given the ciphertext and the key length.
 
 ```
-Input: CRACK    3   BOUIDGFWNAH YILX!
+Input: 3 | BOUIDGFWNAH YILX!
 
 Note: 3 is the key length
 
-Output: 1 3 5   ALPHABETIZE THIS!
+Output: 1 3 5 | ALPHABETIZE THIS!
 ```
 
 #### 3C: Block Step Code (no block size)
