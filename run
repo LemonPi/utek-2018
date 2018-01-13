@@ -5,4 +5,4 @@
 # but you must set the shebang (https://en.wikipedia.org/wiki/Shebang_(Unix))
 # with something that works with the ECF or GCP
 
-python solution/dummy.py
+python3 solution/main.py

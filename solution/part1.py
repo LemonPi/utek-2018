@@ -34,16 +34,24 @@ def encryptBlock(intext, key, encrypting):
         outstr.append(outchar)
     return "".join(outstr)
 
-def part1(instr):
+def part1(instr, partname):
     parts = instr.split(" | ")
     encrypting = parts[0] == "ENCRYPT"
-    if len(parts[1]) == 26 and parts[1].isalpha():
+    if partname == "1c":
         result = encryptMap(parts[2], parts[1], encrypting)
     else:
         result = encryptBlock(parts[2], [int(a) for a in parts[1].split()], encrypting)
-    print(result)
+    return result
+
+def part1file(infilename):
+    with open("input/" + infilename + ".in", "r") as infile, open("output/" + infilename + ".out", "w") as outfile:
+        for l in infile:
+            print(part1(l.rstrip("\n"), infilename), file=outfile)
+
+def main():
+    part1file("1a")
+    part1file("1b")
+    part1file("1c")
 
 if __name__ == "__main__":
-    with open("../input/1b.in", "r") as infile:
-        for l in infile:
-            part1(l.rstrip("\n"))
+    main()
