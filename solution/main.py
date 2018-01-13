@@ -4,5 +4,5 @@ import part1, part2, part3
 # invoke each solution.
 part1.main()
 part2.main()
-# part3.main()
+part3.main()
 # add your main methods here

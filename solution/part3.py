@@ -1,9 +1,9 @@
 import part1
 import part2
-from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights
+from utekutils import doPart, asciiForA, asciiForZ, ptb_prob_weights, inf
 
 def crack3a(ciphertext):
-    bestScore = -1
+    bestScore = -inf
     bestText = None
     bestKey = -1
     for i in range(0, 26):
