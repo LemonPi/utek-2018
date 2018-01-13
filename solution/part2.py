@@ -5,6 +5,8 @@ from utekutils import ptb_prob_weights, doPart, inf
 
 _SANITIZE_INPUT_RE = re.compile(r'<unk>|[^\w]')
 _SANITIZE_WITHOUT_SPACE_RE = re.compile(r'<unk>|N|[^\w]')
+_SANITIZE_WITH_SPACE_RE = re.compile(r'<unk>|N|[^\w] ')
+
 
 def sanitize_input(text):
     return _SANITIZE_INPUT_RE.sub('', text).upper()
@@ -14,12 +16,11 @@ def sanitize_without_space(text):
     return _SANITIZE_WITHOUT_SPACE_RE.sub('', text).upper()
 
 
-def count_chars(corpus, maxn):
-    # 2a and for everything else
-    # remove all <unk>, N, non-alphabetic
-    corpus = sanitize_without_space(corpus)
-    ngrams = [{} for _ in range(1, maxn + 1)]
+def sanitize_with_spaces(text):
+    return _SANITIZE_WITH_SPACE_RE.sub('', text).upper()
 
+
+def build_ngram_from_corpus(ngrams, corpus, maxn):
     for i in range(len(corpus)):
         for n in range(maxn):  # actually n+1 gram since index from 0
             if i + n == len(corpus):
@@ -31,6 +32,25 @@ def count_chars(corpus, maxn):
             else:
                 ngrams[n][ngram] = 1
 
+
+def count_chars(corpus, maxn):
+    # 2a and for everything else
+    # remove all <unk>, N, non-alphabetic
+    corpus = sanitize_without_space(corpus)
+    ngrams = [{} for _ in range(1, maxn + 1)]
+
+    build_ngram_from_corpus(ngrams, corpus, maxn)
+    return ngrams
+
+
+def count_chars_in_words(corpus, maxn):
+    # split along all whitespace
+    corpus = sanitize_with_spaces(corpus).split()
+    ngrams = [{} for _ in range(1, maxn + 1)]
+
+    for word in corpus:
+        build_ngram_from_corpus(ngrams, word, maxn)
+
     return ngrams
 
 
@@ -38,6 +58,7 @@ MAX_N = 7
 PTB_SRC = "../ptb.train.txt"
 
 ptb_ngrams = None
+ptb_ngrams_in_words = None
 
 
 def get_ptb_ngrams():
@@ -55,6 +76,24 @@ def get_ptb_ngrams():
                 pickle.dump(ngrams, dump)
 
     ptb_ngrams = ngrams
+    return ngrams
+
+
+def get_ptb_ngrams_chars_in_words():
+    global ptb_ngrams_in_words
+    if ptb_ngrams_in_words:
+        return ptb_ngrams_in_words
+
+    PTB_P = "ptb_chars_in_words.p"
+    try:
+        ngrams = pickle.load(open(PTB_P, "rb"))
+    except FileNotFoundError:
+        with open(PTB_SRC, 'r') as text:
+            ngrams = count_chars_in_words(text.read(), MAX_N)
+            with open(PTB_P, 'wb') as dump:
+                pickle.dump(ngrams, dump)
+
+    ptb_ngrams_in_words = ngrams
     return ngrams
 
 
@@ -93,7 +132,7 @@ def get_ptb_prob(word, weights):
         if denom == 0:
             break
 
-        prob += weights[i-1] * num / denom
+        prob += weights[i - 1] * num / denom
 
     return prob
 
@@ -107,6 +146,7 @@ def part_2a(line):
 
     if corpus == "PTB":
         ngrams = get_ptb_ngrams()
+        # ngrams = get_ptb_ngrams_chars_in_words()
     else:
         ngrams = count_chars(corpus, MAX_N)
 
