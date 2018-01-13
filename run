@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# replace me with your own script
+# it doesn't need to be bash if it can be run from shell,
+# but you must set the shebang (https://en.wikipedia.org/wiki/Shebang_(Unix))
+# with something that works with the ECF or GCP
+
+python solution/dummy.py
