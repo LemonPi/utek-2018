@@ -47,11 +47,13 @@ def pick_state(curr_score, new_score, temperature, max_temperature, base_selecti
         return 1
 
     # print("resolution gain: {}".format(score_gain))
-    prob = 1 / (1 + math.exp(-selectivity * score_gain))
-    # print("{} -> {} probability: {}".format(curr_score, new_score, prob))
-
-    # apply sloped sigmoid function, which guarantees to be (0,1)
-    return prob
+    try:
+        prob = 1 / (1 + math.exp(-selectivity * score_gain))
+        # print("{} -> {} probability: {}".format(curr_score, new_score, prob))
+        # apply sloped sigmoid function, which guarantees to be (0,1)
+        return prob
+    except OverflowError:
+        return 0
 
 
 def anneal(temperature, step):
