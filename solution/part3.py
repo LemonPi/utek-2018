@@ -176,7 +176,7 @@ def simulated_annealing(get_score, get_neighbour, sentence, curr_key, score_scal
         new_score = get_score(new_key, scores_dp, sentence)
 
         # export for visualization
-        print("{}|{}|{}".format(time.time(), best_score, best_decrypt), file=VISUALIZATION_FILE)
+        # print("{}|{}|{}".format(time.time(), best_score, best_decrypt), file=VISUALIZATION_FILE)
 
         if pick_state(curr_score, new_score, temperature, MAX_TEMPERATURE, BASE_SELECTIVITY,
                       score_scale) > random.random():
@@ -228,13 +228,13 @@ def crack3c(orig_sentence):
     best_score = None
 
     for key_length in range(1, 8):
-        for seed in range(20):
+        for seed in range(3):
             random.seed(seed)
             curr_key = tuple(random.randint(0, 26) for _ in range(key_length))
             curr_key, key_score = simulated_annealing(score_key, get_neighbour_block_key, sentence, curr_key, 20,
-                                                      MAX_STEPS / 4)
+                                                      MAX_STEPS / 3)
             key, score = simulated_annealing(score_sentence, get_neighbour_block_key, sentence, curr_key, 0.1,
-                                             MAX_STEPS / 4)
+                                             MAX_STEPS / 3)
 
             if best_score is None or score > best_score:
                 best_score = score
