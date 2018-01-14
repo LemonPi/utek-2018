@@ -204,7 +204,7 @@ def crack3b(ciphertext):
     best_key = None
     best_score = None
 
-    for seed in range(60):
+    for seed in range(5):
         random.seed(seed)
         curr_key = tuple(random.randint(0, 26) for _ in range(key_length))
         curr_key, key_score = simulated_annealing(score_key, get_neighbour_block_key, sentence, curr_key, 20)
